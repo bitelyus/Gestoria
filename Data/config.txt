@@ -1,0 +1,7 @@
+pass:pajarraco
+max_horas:250
+horas_base:150
+max_euros_hora:35
+precio_jornada:35
+incremento_extra:1,5
+impuestos:15

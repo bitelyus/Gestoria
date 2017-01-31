@@ -1,0 +1,6 @@
+c:\users\mik\documents\visual studio 2015\Projects\Gestoria\Gestoria\bin\Debug\Gestoria.exe.config
+C:\Users\MiK\Documents\Visual Studio 2015\Projects\Gestoria\Gestoria\obj\Debug\Gestoria.csprojResolveAssemblyReference.cache
+C:\Users\MiK\Documents\Visual Studio 2015\Projects\Gestoria\Gestoria\bin\Debug\Gestoria.exe
+C:\Users\MiK\Documents\Visual Studio 2015\Projects\Gestoria\Gestoria\bin\Debug\Gestoria.pdb
+C:\Users\MiK\Documents\Visual Studio 2015\Projects\Gestoria\Gestoria\obj\Debug\Gestoria.exe
+C:\Users\MiK\Documents\Visual Studio 2015\Projects\Gestoria\Gestoria\obj\Debug\Gestoria.pdb
