@@ -1,6 +1,11 @@
+// PROBANDO HERENCIA //
+// PROBANDO HERENCIA //
+// PROBANDO HERENCIA //
+
 using System;
 namespace Gestoria.Model
 {
+
     class NominaEjecutivo:Nomina {
 
         private float _bono;
@@ -20,8 +25,9 @@ namespace Gestoria.Model
             this._bono = 0.00F;
         }
 
-        public NominaEjecutivo(float bono, string nombre, string apellidos, string mes, int horas, float euxhoras) : base(nombre, apellidos, mes, horas, euxhoras) {
-            this._bono=bono;
+        public NominaEjecutivo(float bono, string nombre, string apellidos, string mes, int horas, float euxhoras):
+            base(nombre, apellidos, mes, horas, euxhoras) {
+                this._bono=bono;
         }
 
 

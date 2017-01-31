@@ -14,7 +14,11 @@ namespace Gestoria.Controler
         private static string ruta = "Data/config.txt";
         private static string rutabin = "Data/config.data";
 
-
+        /// <summary>
+        /// Procedimiento para mostrar el menu principal de adminstración para gestionar los datos de configuracion
+        /// 
+        /// <paramref name="migestoria">Recibe el objeto gestoria</paramref>
+        /// </summary>
         public static void menu_adminstracion()
         {
             bool salir;
@@ -354,6 +358,7 @@ namespace Gestoria.Controler
                             datosBaseBin.incrementoextra = CH.leerCantidad("IMCREMENTO H. EXTRA.");
                             datosBaseBin.impuestos = CH.leerCantidad("% DE IMPUESTOS......");
                             FH.grabarValoresBinary(rutabin, pass, datosBaseBin.maxhoras, datosBaseBin.horasbase, datosBaseBin.maxeuxhora, datosBaseBin.preciojoranda, datosBaseBin.incrementoextra, datosBaseBin.impuestos);
+                            FH.grabarValores(ruta, pass, datosBaseBin.maxhoras, datosBaseBin.horasbase, datosBaseBin.maxeuxhora, datosBaseBin.preciojoranda, datosBaseBin.incrementoextra, datosBaseBin.impuestos);
                             salir = true;
                         }
                         catch (Exception ex)

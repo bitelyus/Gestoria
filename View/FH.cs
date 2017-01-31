@@ -39,6 +39,7 @@ namespace Gestoria.View
         public static bool grabarValores(string ruta, string pass, int maxhoras, int horasbase, float maxeurxhora, float preciojornada, float incrementoextra, float impuestos)
         {
             bool grabado = false;
+            
             try
             {
                 StreamWriter sw = File.CreateText(ruta);

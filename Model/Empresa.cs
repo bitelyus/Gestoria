@@ -88,5 +88,30 @@ namespace Gestoria.Model
             return true;
         }
 
+        override
+        public string ToString() {
+            string salida;
+            int trabajadores;
+
+            trabajadores = 0;
+            salida="\n";
+
+            if (plantilla!=null) {
+                trabajadores = plantilla.Length;
+            }
+
+            salida+="SOY UNA EMPRESA\n===============\n\n";
+            salida+="NOMBRE......: " + this.nombre + "\n";
+            salida+="TRABAJADORES: " + trabajadores + "\n";
+            if (trabajadores>0) {
+                foreach (Trabajador t in plantilla) {
+                    salida+=t.ToString();
+                }
+            }
+
+            return salida;
+        }
+
+
     }
 }

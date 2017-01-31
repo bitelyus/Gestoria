@@ -68,6 +68,31 @@ namespace Gestoria.Model
             }
             this._empresas[this._empresas.Length - 1] = empresa;
             return true;
-        }       
+        } 
+
+         public bool eliminarEmpresa(Empresa empresa) 
+        {
+            Empresa[] copia = null;
+            int contador = 0;
+            if (_empresas.Length == 1)
+            {
+                _empresas = null;
+            }
+            else {
+                copia = new Empresa[_empresas.Length - 1];
+                for (int i = 0; i < _empresas.Length; i++)
+                {
+                    if (_empresas[i] != empresa)
+                    {
+                        copia[contador] = _empresas[i];
+                        contador++;
+                    }
+                }
+                _empresas = new Empresa[copia.Length];
+                copia.CopyTo(_empresas, 0);
+                copia = null;
+            }
+            return true;
+        } 
     }
 }

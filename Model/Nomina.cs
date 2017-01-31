@@ -2,23 +2,28 @@
 
 namespace Gestoria.Model
 {
+    /// <summary>
+    /// Clase Modelo para albergar los datos de una nómina de un trabajador
+    /// </summary>
     class Nomina
     {
         // ZONA DE ATRIBUTOS
 
-        public string nombre;
-        public string apellidos;
-        private string _mes;
-        private int _horas;
-        private float _eurosHoras;
-        private int _horasExtra;
-        private float _salarioBase;
-        private float _salarioExtra;
-        private float _impuestos;
+        public string nombre;       // EL NOMBRE DEL TRABAJADOR
+        public string apellidos;    // LOS APELLIDOS DEL TRABAJADOR
+        private string _mes;        // EL MES CORRESPONDIENTE A LA NOMINA
+        private int _horas;         // LAS HORAS TRABAJADAS AL MES
+        private float _eurosHoras;  // LOS EUROS QUE COBRA POR HORAS. SE COJE DE FICHERO DE CONFIGURACION
+        private int _horasExtra;    // EL TOPE DE HORAS QUE ES SALARIO BASE. EL RESTO SERÍA HORAS EXTRA CON INCREMENTO. FICHERO CONFIG.
+        private float _salarioBase; // EL SALARIO BASE. CALCULADO EN NOMINA
+        private float _salarioExtra;// EL SALARIO CORRESPONDIENTE A LAS HORAS EXTRA. CALCULADO EN NOMINA
+        private float _impuestos;   // EL PORCENTAJE DE IMPUESTOS O RETENCIONES QUE SE EL APLICA A LA NÓMINA. CALCULADO EN NOMINA
 
 
         // ZONA DE CONSTRUCTORES
-
+        /// <summary>
+        /// Constructor vacio para la clase nómina
+        /// </summary>
         public Nomina() {
             this.nombre = null;
             this.apellidos = null;
@@ -31,6 +36,13 @@ namespace Gestoria.Model
             this._impuestos = 0.0F;
         }
 
+        /// <summary>
+        /// Constructor con todos los datos necesarios para crear una Nomina
+        /// <paramref name="nombre">El nombre del trabajador</paramref>
+        /// <paramref name="apellidos">Los apellidos del trabajador</paramref>
+        /// <paramref name="mes">El mes correspondiente a la nómina</paramref>
+        /// <paramref name="horas">Las horas trabajadas al mes</paramref>
+        /// <paramref name="euxhoras">El precio que cobra por horas</paramref>
         public Nomina(string nombre, string apellidos, string mes, int horas, float euxhoras) {
             this.nombre = nombre;
             this.apellidos = apellidos;
@@ -162,6 +174,11 @@ namespace Gestoria.Model
 
         // METODOS PÚBLICOS PARA CALCULO DE LOS IMPORTES DE LA NOMINA
 
+        /// <summary>
+        /// Método para calcular el importe bruto de la nómina
+        /// <paramref name="jornada">Las horas consideradas salario base a precio normal. El resto es extra con incremento</paramref>
+        /// <paramref name="incrExtra">El tanto por ciento de impuestos a aplicar</paramref>
+        /// </summary>
         public bool calcularBruto(int jornada, float incrExtra)
         {
             bool correcto = false;
@@ -182,14 +199,19 @@ namespace Gestoria.Model
             return correcto;
         }
 
+        /// <summary>
+        /// Método para calcular el importe correspondiente de impuestos
+        /// <paramref name="porcentaje">El tanto por ciento de impuesto a aplicar al salario bruto</paramref>
+        /// </summary>
         public void calcularImpuestos(float porcentaje)
         {
             _impuestos = salarioBruto * (porcentaje / 100);
         }
 
 
-        // SOBREESCRITURA DEL METODO TOSTRING DE LA CLASE
-
+        /// <summary>
+        /// Sobreescritura del método ToString de la clase para darle formato boniko a los datos de la clase
+        /// </summary>
         override
         public string ToString() {
             string salida = "";

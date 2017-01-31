@@ -14,7 +14,7 @@ namespace Gestoria.Controler
         /// Procedimiento para mostrar el menu de opciones seccion 3. Trabajadores
         /// <paramref name="migestoria">Recibe la Gestoria por referencia</paramref>
         /// </summary>
-        public static void menu_trabajadores(ref Gestora migestoria)
+        public static void menu_trabajadores(Gestora migestoria)
         {
             if (migestoria.empresas != null)
             {
@@ -25,13 +25,15 @@ namespace Gestoria.Controler
                 do // MIENTRAS NO DIGAMOS QUE QUEREMOS SALIR.... HACER ESTO...
                 {
                     // SI NO HAY EMPRESA ACTIVCA, LA PEDIMOS Y MOSTRAMOS MENU
-                    if (empresaActiva == 0) { empresaActiva = InterfazTrabajador.pedirEmpresa(migestoria); }
+                    if (empresaActiva == 0) { 
+                        empresaActiva = InterfazTrabajador.pedirEmpresa(migestoria); 
+                    }
                     InterfazTrabajador.menuTrabajador(empresaActiva, migestoria);
-                    opcion = ConsoleHelper.leerOpcion(5);
+                    opcion = CH.leerOpcion(5);
                     switch (opcion)
                     {
                         case 1:     // REGISTRAR TRABAJADOR
-                            ControlerTrabajador.nuevoTrabajador(ref migestoria,empresaActiva);
+                            ControlerTrabajador.nuevoTrabajador(migestoria,empresaActiva);
                             break;
                         case 2:     // CONSULTAR TRABAJADOR
                             ControlerTrabajador.consultarTrabajador(migestoria, empresaActiva); 
@@ -62,7 +64,7 @@ namespace Gestoria.Controler
         /// Procedimiento para añadir un nuevo trabajador a la empresa activa.. Pdría recibir sólo la empresa activa. >> V2.0
         /// <paramref name="empresaActiva">El indice de la empresa activa para gestionar sus trajadores</paramref>
         /// <paramref name="migestoria">Le Gestoria con todas las empresa</paramref>
-        public static void nuevoTrabajador(ref Gestora migestoria, byte empresaActiva) {
+        public static void nuevoTrabajador(Gestora migestoria, byte empresaActiva) {
 
             // 1. PEDIR DATOS TRABAJADOR.
             // 2. AÑADIR AL ARRAY DE TRABAJADORES DE LA EMPRESA ACTIVA!

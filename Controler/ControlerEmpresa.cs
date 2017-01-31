@@ -4,6 +4,9 @@ using Gestoria.Model;
 
 namespace Gestoria.Controler
 {
+    /// <summary>
+    /// Clase para gestoinar la Lógia de Negocio de todos los procesos relacionados con las Empresas de la Gestoría
+    /// </summary>
     static class ControlerEmpresa
     {
         /// <summary>
@@ -30,19 +33,19 @@ namespace Gestoria.Controler
                         ControlerEmpresa.nuevaEmpresa(migestoria);
                         break;
                     case 2:
-                        Console.WriteLine("\nOPCIÓN NO DEFINIDA!!! :)");
+                        ControlerEmpresa.consultarEmpresa(migestoria);
                         CH.pausa();
                         break;
-                    case 3: 
+                    case 3:
                         ControlerEmpresa.modificarEmpresa(ref migestoria);
                         CH.pausa();
                         break;
                     case 4:
-                        Console.WriteLine("\nOPCIÓN NO DEFINIDA!!! :)");
+                        ControlerEmpresa.borrarEmpresa(migestoria);
                         CH.pausa();
                         break;
                     case 5:
-                        InterfazEmpresa.listadoEmpresas(migestoria,false);
+                        InterfazEmpresa.listadoEmpresas(migestoria, false);
                         CH.pausa();
                         break;
                     case 0:
@@ -57,7 +60,7 @@ namespace Gestoria.Controler
 
         }
 
-       
+
         /// <summary>
         /// Procedimiento para agregar una nueva empresa al listado de empresas de la Gestoria
         /// <paramref name="migestoria">La Estructura Gestoria por referencia</paramref>
@@ -75,8 +78,9 @@ namespace Gestoria.Controler
             aux = null;
             // PROCESO
             aux = InterfazEmpresa.leerEmpresa();
-            empresa  = new Empresa(aux);       
-            if (migestoria.agregarEmpresa(empresa)) {
+            empresa = new Empresa(aux);
+            if (migestoria.agregarEmpresa(empresa))
+            {
                 aux = "\ni> SE HA CREADO UNA NUEVA EMPRESA Y AGREGADO A LA GESTORIA";
             }
             // SALIDA
@@ -96,18 +100,106 @@ namespace Gestoria.Controler
             byte tope;
             Empresa empresa;
             // ENTRADA
-            empresas=migestoria.empresas.Length;
-            Byte.TryParse(empresas.ToString(), out tope);
-            InterfazEmpresa.listadoEmpresas(migestoria,true);
-            opcion = CH.leerOpcionMsg(tope,"SELECCIONA UNA EMPRESA");
-            empresa = migestoria.empresas[opcion-1];
-            // PROCESO
-            empresa.nombre = CH.leerCadena("NUEVO NOMBRE EMPRESA..");
-            // SALIDA
-            CH.lcdColor("\ni> SE HA MODIFICADO CORRECTAMENTE EL NOMBRE DE LA EMPRESA",ConsoleColor.Green);
-            
+            if (migestoria.empresas != null)
+            {
+                empresas = migestoria.empresas.Length;
+                Byte.TryParse(empresas.ToString(), out tope);
+                InterfazEmpresa.listadoEmpresas(migestoria, true);
+                opcion = CH.leerOpcionMsg(tope, "SELECCIONA UNA EMPRESA");
+                empresa = migestoria.empresas[opcion - 1];
+                // PROCESO
+                empresa.nombre = CH.leerCadena("NUEVO NOMBRE EMPRESA..");
+                // SALIDA
+                CH.lcdColor("\ni> SE HA MODIFICADO CORRECTAMENTE EL NOMBRE DE LA EMPRESA", ConsoleColor.Green);
+            }
+            else
+            {
+                CH.lcdColor("!> NO HAY NINGUNA EMPRESA CREADA!", ConsoleColor.DarkYellow);
+            }
+
+        }
+        /// <summary>
+        /// Procedimiento para consultar los datos de una empresa seleccionada de un indice de empresas.
+        /// <paramref name="migestoria">Recibe el objeto gestoria</</paramref>
+        /// </summary>
+        public static void consultarEmpresa(Gestora migestoria)
+        {
+
+            // 1. LISTAR EMPRESAS
+            // 2. SELECCIONAR EMPRESA
+            // 3. MOSTRAR DATOS EMPRESA
+            int opcion;
+            int empresas;
+            byte tope;
+            Empresa empresa;
+            // ENTRADA
+            if (migestoria.empresas != null)
+            {
+                empresas = migestoria.empresas.Length;
+                Byte.TryParse(empresas.ToString(), out tope);
+                InterfazEmpresa.listadoEmpresas(migestoria, true);
+                opcion = CH.leerOpcionMsg(tope, "SELECCIONA UNA EMPRESA");
+                empresa = migestoria.empresas[opcion - 1];
+
+                // SALIDA
+                CH.lcd(empresa.ToString());
+            }
+            else
+            {
+                CH.lcdColor("!> NO HAY NINGUNA EMPRESA CREADA!", ConsoleColor.DarkYellow);
+            }
+
         }
 
+        /// <summary>
+        /// Método para eliminar una empresa de la gestoria. 
+        /// <paramref name="migestoria">Recibe la gestoria entera</paramref>
+        /// </summary>
+        public static bool borrarEmpresa(Gestora migestoria) {
+
+            // 1. LISTAR EMPRESAS
+            // 2. SELECCIONAR EMPRESA
+            // 3. BORRAR EMPRESA
+
+            bool borrada;
+            byte opcion;
+            byte tope;
+            int empresas;
+            Empresa empresa;
+            string mensaje;
+
+            // ENTRADA
+            mensaje = "";
+            borrada = false;
+
+            // PROCESO
+            if (migestoria.empresas!=null) {
+                empresas = migestoria.empresas.Length;
+                Byte.TryParse(empresas.ToString(), out tope);
+                InterfazEmpresa.listadoEmpresas(migestoria,true);
+                opcion = CH.leerOpcionMsg(tope,"SELECCIONA UNA EMPRESA DE LA LISTA");
+                empresa = migestoria.empresas[opcion-1];
+                if (migestoria.eliminarEmpresa(empresa)) {
+                    mensaje = "\ni> SE HA ELIMINADO CORRECTAMENTE LA EMPRESA DE LA GESTORIA";
+                    borrada = true;
+                } else {
+                    mensaje = "\n!> ERROR!! ... ALGO HA PASADO QUE LA COSA NO HA SALIDO MUY BIEN";
+                }
+
+            } else {
+                mensaje = "\n!> NO HAY NINGUA EMPRESA EN LA GESTORIA!";
+            }
+
+            // SALIDA
+            if (borrada) {
+                CH.lcdColor(mensaje,ConsoleColor.Green);
+            } else {
+                CH.lcdColor(mensaje,ConsoleColor.Red);
+            }
+
+            return borrada;
+
+        }   
 
     }
 }

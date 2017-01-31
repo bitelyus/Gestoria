@@ -5,7 +5,9 @@ using Gestoria.View;
 namespace Gestoria.Controler
 {
 
-
+    /// <summary>
+    /// Clase Estatica controladora de la Lógia de Negocio del Modelo de Datos para la Nómina de un trabajador
+    /// </summary>
     static class ControlerNomina
     {
         
@@ -13,8 +15,11 @@ namespace Gestoria.Controler
         // MÉTODO PARA MOSTRAR EL MENU DE NOMINAS. RECIBE LA GESTORIA POR REFERENCIA
         // PARA PODER APLICARLE LOS CAMIOS QUE SE REALIZEN
 
-
-        public static void menu_nominas(ref Gestora migestoria)
+        /// <summary>
+        /// Procedimiento para mostrar el menu principal para gestión de nóminas
+        /// <paramref name="migestoria">Recibe el objeto gestoria</paramref>
+        /// </summary>
+        public static void menu_nominas(Gestora migestoria)
         {
             
             if (migestoria.empresas != null)

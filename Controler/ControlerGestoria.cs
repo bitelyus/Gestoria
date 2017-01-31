@@ -9,11 +9,14 @@ namespace Gestoria.Controler
     
         // ZONA DE MÉTODOS PUBLICOS PARA OPCIONES DE MENU
         /// <summary>
-        /// Procedimiento para comenzar la funcion...
+        /// Procedimiento para comenzar la funcion ...
         /// </summary>
         public static void comenzar() {
             
+            // ESTO PARA COMPROBAR LA EXISTENCIA DE LOS ARCHIVOS DE CONFIGURACION
+            // SI NO EXISTEN... LOS CREAMOS SEGUIDAMENTE...
             ControlerAdministracion.configCheck();
+
 
             // 1. CREAMOS NUESTRA GESTORIA
             // 2. MOSTRAMOS MENU
@@ -41,10 +44,10 @@ namespace Gestoria.Controler
                         ControlerEmpresa.menu_empresas(migestoria);
                         break;
                     case 2:
-                        ControlerTrabajador.menu_trabajadores(ref migestoria);
+                        ControlerTrabajador.menu_trabajadores(migestoria);
                         break;
                     case 3:
-                        ControlerNomina.menu_nominas(ref migestoria);
+                        ControlerNomina.menu_nominas(migestoria);
                         break;
                     case 4:
                         ControlerAdministracion.menu_adminstracion();
