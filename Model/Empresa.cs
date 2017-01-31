@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region License
+// (C) - 2016 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
 
 namespace Gestoria.Model
 {
@@ -22,7 +21,7 @@ namespace Gestoria.Model
             this._plantilla = null;
         }
 
-        public Empresa(String nombre)
+        public Empresa(string nombre)
         {
             this.nombre = nombre;
             this._plantilla = null;

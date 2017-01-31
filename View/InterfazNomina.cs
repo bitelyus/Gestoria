@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region License
+// (C) - 2017 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
+
+using System;
 using Gestoria.Model;
 using Gestoria.Controler;
 

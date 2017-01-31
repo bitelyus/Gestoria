@@ -1,3 +1,8 @@
+#region License
+// (C) - 2016 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
+
 // PROBANDO HERENCIA //
 // PROBANDO HERENCIA //
 // PROBANDO HERENCIA //

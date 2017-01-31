@@ -1,3 +1,8 @@
+#region License
+// (C) - 2017 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
+
 using System;
 using System.IO;
 
@@ -39,7 +44,7 @@ namespace Gestoria.View
         public static bool grabarValores(string ruta, string pass, int maxhoras, int horasbase, float maxeurxhora, float preciojornada, float incrementoextra, float impuestos)
         {
             bool grabado = false;
-            
+
             try
             {
                 StreamWriter sw = File.CreateText(ruta);

@@ -1,4 +1,9 @@
-﻿using System;
+﻿#region License
+// (C) - 2017 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
+
+using System;
 using Gestoria.View;
 using Gestoria.Model;
 

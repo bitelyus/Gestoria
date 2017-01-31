@@ -1,3 +1,8 @@
+#region License
+// (C) - 2017 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
+
 // FUNCIONES PUBLICAS DISPONIBLES
 // .pausa() - pausa el fluzo hasta pulsar una tecla
 // .cls() - para limpiar la pantalla

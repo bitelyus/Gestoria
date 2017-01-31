@@ -1,3 +1,8 @@
+#region License
+// (C) - 2016 : Miguel Camacho Sánchez @ www.miguelkiko.com
+// GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
+#endregion
+
 using System;
 using System.IO;
 using Gestoria.Model;
@@ -5,18 +10,22 @@ using Gestoria.View;
 
 namespace Gestoria.Controler
 {
+    /// <summary>
+    /// Clase Estatica para controlar la Lógica de Negocio de las gestiones realizadas con el módulo de Administración del programa.
+    /// Estans funciones incluyen: Modificar la contraseña, Modificar los Datos para las Nóminas, funcion para hacer login, y para
+    /// comprobar la existencia del archivo de configuracion y/o/u crearlo.
+    /// </summary>
     static class ControlerAdministracion
     {
 
-        private static DatosBase datosBase;
-        private static DatosBase datosBaseBin;
-        private static string pass;
-        private static string ruta = "Data/config.txt";
-        private static string rutabin = "Data/config.data";
+        private static DatosBase datosBase;                 // EL OBJETO CON LOS DATOS PARA LOS CALCULOS DE LA NÓMINA
+        private static DatosBase datosBaseBin;              // LO MISMO PERO OBTENIDO DEL FICHERO CONFIG. EN BINARIO
+        private static string pass;                         // LA CONTRASEÑA DE ACCESO
+        private static string ruta = "Data/config.txt";     // LA RUTA DEL FICHERO DE CONFIGURACION EN TEXTO
+        private static string rutabin = "Data/config.data"; // LA RUTA DEL FICHIERO DE CONFIGURACION EN FORMATO BINARIO
 
         /// <summary>
         /// Procedimiento para mostrar el menu principal de adminstración para gestionar los datos de configuracion
-        /// 
         /// <paramref name="migestoria">Recibe el objeto gestoria</paramref>
         /// </summary>
         public static void menu_adminstracion()
@@ -59,9 +68,73 @@ namespace Gestoria.Controler
             }
         }
 
-        ///<summary>
-        ///Método para logearse al sistema de administración de valores de configuración de la nómina por defecto
-        ///</summary>
+        /// <summary>
+        /// Procedimiento para comprobar la existencia del archivo de configuracion config.data
+        /// Si no existe, se crea si o si ... >:)
+        /// </summary>
+        public static void configCheck()
+        {
+            // 1. COMPROBAR EXISTENCIA... 
+            // 2. SI NO ESTA.. CREARLO:
+            // 3. PEDIR LOS DATOS Y GUARDARLOS A OBJETO DatosBase
+            // 4. CON LOS DATOS EN EL OBJETO, LO PASAMOS POR EL FILEHELPER PARA GUARDARLO EN BINARIO
+            // 5. SALIMOS... 
+
+            string pass;    // PARA GUARDAR LA CONTRASEÑA
+            bool salir;     // CONTROL DE SALIDA SI CREACION CORRECTA
+
+            try
+            {
+                datosBaseBin = new DatosBase(); // REUSAMOS EL OBJETO DEL CONTROLADOR
+                salir = false;                  // SETEAMOS SALIR A FALSE
+                
+                if (!File.Exists(rutabin))      
+                {
+                    CH.cls();
+                    CH.lcdColor("!> ATENCIÓN!!.. NO EXISTE EL FICHERO DE CONFIGURACION!!", ConsoleColor.Red);
+                    CH.lcdColor("\ni> VAMOS A CREARLO AHORA... ALMA DEL AMOL HERRMOZO >:) \ni> Y NO TE EQUIVOQUES.... PUES EMPEZARAS DEL PRINCIPIO", ConsoleColor.DarkYellow);
+                    do
+                    {
+                        try
+                        {
+                            CH.lcd("");
+                            pass = CH.leerCadena("CONTRASEÑA DE ACCESO");
+                            datosBaseBin.maxhoras = CH.leerNumero("HORAS MÁXIMAS NOMINA");
+                            datosBaseBin.horasbase = CH.leerNumero("HORAS TOPE SAL. BASE");
+                            datosBaseBin.maxeuxhora = CH.leerCantidad("EUROS MAX. X HORA...");
+                            datosBaseBin.preciojoranda = CH.leerCantidad("PRECIO EUR. JORANDA.");
+                            datosBaseBin.incrementoextra = CH.leerCantidad("IMCREMENTO H. EXTRA.");
+                            datosBaseBin.impuestos = CH.leerCantidad("% DE IMPUESTOS......");
+                            FH.grabarValoresBinary(rutabin, pass, datosBaseBin.maxhoras, datosBaseBin.horasbase, datosBaseBin.maxeuxhora, datosBaseBin.preciojoranda, datosBaseBin.incrementoextra, datosBaseBin.impuestos);
+                            FH.grabarValores(ruta, pass, datosBaseBin.maxhoras, datosBaseBin.horasbase, datosBaseBin.maxeuxhora, datosBaseBin.preciojoranda, datosBaseBin.incrementoextra, datosBaseBin.impuestos);
+                            salir = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            CH.lcdColor("!> ERROR: " + ex.Message, ConsoleColor.Red);
+                            CH.pausa();
+                        }
+
+                    } while (!salir);
+
+                } else {
+                    CH.cls();
+                    CH.lcdColor("!> FICHERO DE CONFIGURACION LOCALIZADO...", ConsoleColor.Green);
+                    CH.pausa();
+                }
+            }
+            catch (IOException ex)
+            {
+                CH.lcdColor("!> ERROR I/O: " + ex.Message, ConsoleColor.Red);
+                CH.pausa();
+            }
+            //CH.pausa();
+
+        }
+
+        /// <summary>
+        /// Método para logearse al sistema de administración de valores de configuración de la nómina por defecto
+        /// </summary>
         public static bool logIn()
         {
 
@@ -111,7 +184,7 @@ namespace Gestoria.Controler
 
 
         /// <summary>
-        /// MÉTODO APRA CARGAR LOS DATOS DE CONFIGURAICÓN A UN OBJETO Y DEVOLVERLO
+        /// Función para obtener los datos base del fichero de texto y volcarlos a un objeto tipo DatosBase con los datos de config.
         /// </summary>
         public static DatosBase cargarDatos()
         {
@@ -320,69 +393,6 @@ namespace Gestoria.Controler
             } while (!salir);
         }
 
-        /// <summary>
-        /// Procedimiento para comprobar la existencia del archivo de configuracion config.data
-        /// Si no existe, se crea si o si ... >:)
-        /// </summary>
-        public static void configCheck()
-        {
-            // 1. COMPROBAR EXISTENCIA... 
-            // 2. SI NO ESTA.. CREARLO:
-            // 3. PEDIR LOS DATOS Y GUARDARLOS A OBJETO DatosBase
-            // 4. CON LOS DATOS EN EL OBJETO, LO PASAMOS POR EL FILEHELPER PARA GUARDARLO EN BINARIO
-            // 5. SALIMOS... 
-
-            string pass;    // PARA GUARDAR LA CONTRASEÑA
-            bool salir;     // CONTROL DE SALIDA SI CREACION CORRECTA
-
-            try
-            {
-                datosBaseBin = new DatosBase(); // REUSAMOS EL OBJETO DEL CONTROLADOR
-                salir = false;                  // SETEAMOS SALIR A FALSE
-                
-                if (!File.Exists(rutabin))      
-                {
-                    CH.cls();
-                    CH.lcdColor("!> ATENCIÓN!!.. NO EXISTE EL FICHERO DE CONFIGURACION!!", ConsoleColor.Red);
-                    CH.lcdColor("\ni> VAMOS A CREARLO AHORA... ALMA DEL AMOL HERRMOZO >:) \ni> Y NO TE EQUIVOQUES.... PUES EMPEZARAS DEL PRINCIPIO", ConsoleColor.DarkYellow);
-                    do
-                    {
-                        try
-                        {
-                            CH.lcd("");
-                            pass = CH.leerCadena("CONTRASEÑA DE ACCESO");
-                            datosBaseBin.maxhoras = CH.leerNumero("HORAS MÁXIMAS NOMINA");
-                            datosBaseBin.horasbase = CH.leerNumero("HORAS TOPE SAL. BASE");
-                            datosBaseBin.maxeuxhora = CH.leerCantidad("EUROS MAX. X HORA...");
-                            datosBaseBin.preciojoranda = CH.leerCantidad("PRECIO EUR. JORANDA.");
-                            datosBaseBin.incrementoextra = CH.leerCantidad("IMCREMENTO H. EXTRA.");
-                            datosBaseBin.impuestos = CH.leerCantidad("% DE IMPUESTOS......");
-                            FH.grabarValoresBinary(rutabin, pass, datosBaseBin.maxhoras, datosBaseBin.horasbase, datosBaseBin.maxeuxhora, datosBaseBin.preciojoranda, datosBaseBin.incrementoextra, datosBaseBin.impuestos);
-                            FH.grabarValores(ruta, pass, datosBaseBin.maxhoras, datosBaseBin.horasbase, datosBaseBin.maxeuxhora, datosBaseBin.preciojoranda, datosBaseBin.incrementoextra, datosBaseBin.impuestos);
-                            salir = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            CH.lcdColor("!> ERROR: " + ex.Message, ConsoleColor.Red);
-                            CH.pausa();
-                        }
-
-                    } while (!salir);
-
-                } else {
-                    CH.cls();
-                    CH.lcdColor("!> FICHERO DE CONFIGURACION LOCALIZADO...", ConsoleColor.Green);
-                    CH.pausa();
-                }
-            }
-            catch (IOException ex)
-            {
-                CH.lcdColor("!> ERROR I/O: " + ex.Message, ConsoleColor.Red);
-                CH.pausa();
-            }
-            //CH.pausa();
-
-        }
-
+       
     }
 }

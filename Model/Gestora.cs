@@ -3,8 +3,6 @@
 // GESTION DE NÓMINAS - 2º DAM - DESARROLLO INTERFACES
 #endregion
 
-using System;
-using Gestoria.View;
 
 namespace Gestoria.Model
 {   /// <summary>
@@ -70,7 +68,7 @@ namespace Gestoria.Model
             return true;
         } 
 
-         public bool eliminarEmpresa(Empresa empresa) 
+        public bool eliminarEmpresa(Empresa empresa) 
         {
             Empresa[] copia = null;
             int contador = 0;
